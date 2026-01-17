@@ -1,7 +1,10 @@
 import typer
 import os
+import sys
+import importlib
 from pathlib import Path
 
+from superkit.runtime.registry import runtime
 from superkit_cli.ui.runtime.server_info import server_info
 
 run_app = typer.Typer(help="Run a SuperKit / FastAPI application")
@@ -13,14 +16,25 @@ def run(
         ...,
         help="App instance name defined in main.py (e.g. app, dev, prod)",
     ),
-    host: str = typer.Option("127.0.0.1", "--host"),
-    port: int = typer.Option(8000, "--port"),
-    reload: bool = typer.Option(True, "--reload/--no-reload"),
+    host: str | None = typer.Option(
+        None,
+        "--host",
+        help="Override host from settings",
+    ),
+    port: int | None = typer.Option(
+        None,
+        "--port",
+        help="Override port from settings",
+    ),
+    reload: bool | None = typer.Option(
+        None,
+        "--reload/--no-reload",
+        help="Override reload from settings",
+    ),
 ):
-    """
-    Run an app instance from main.py using uvicorn.
-    """
-
+    # ─────────────────────────────────────────────
+    # Locate project root & main.py
+    # ─────────────────────────────────────────────
     cwd = Path.cwd()
     main_file = cwd / "main.py"
 
@@ -29,26 +43,74 @@ def run(
             "Error: main.py not found in the current directory.",
             fg=typer.colors.RED,
         )
-        raise typer.Exit(code=1)
+        raise typer.Exit(1)
 
+    # ─────────────────────────────────────────────
+    # Ensure project root is importable
+    # ─────────────────────────────────────────────
+    if str(cwd) not in sys.path:
+        sys.path.insert(0, str(cwd))
+
+    # ─────────────────────────────────────────────
+    # Import main.py to initialize runtime
+    # ─────────────────────────────────────────────
+    try:
+        importlib.import_module("main")
+    except Exception as e:
+        typer.secho(
+            f"Error importing main.py: {e}",
+            fg=typer.colors.RED,
+        )
+        raise typer.Exit(1)
+
+    # ─────────────────────────────────────────────
+    # Validate runtime
+    # ─────────────────────────────────────────────
+    if not runtime.is_initialized():
+        typer.secho(
+            "Error: SuperKit runtime was not initialized.\n"
+            "Make sure create_app() is called in main.py.",
+            fg=typer.colors.RED,
+        )
+        raise typer.Exit(1)
+
+    # ─────────────────────────────────────────────
+    # Resolve server configuration
+    # ─────────────────────────────────────────────
+    server = runtime.server
+    settings = runtime.settings
+
+    resolved_host = host if host is not None else server["host"]
+    resolved_port = port if port is not None else server["port"]
+    resolved_reload = reload if reload is not None else server["reload"]
+    environment = server.get("environment", "development")
+
+    # ─────────────────────────────────────────────
+    # UI
+    # ─────────────────────────────────────────────
+    server_info(
+        app_name=settings.get("title", "SuperKit App"),
+        instance=instance,
+        host=resolved_host,
+        port=resolved_port,
+        reload=resolved_reload,
+        environment=environment,
+        docs_enabled=settings.get("docs_url") is not None,
+    )
+
+    # ─────────────────────────────────────────────
+    # Run uvicorn
+    # ─────────────────────────────────────────────
     cmd = [
         "uvicorn",
         f"main:{instance}",
-        "--host", host,
-        "--port", str(port),
+        "--host",
+        resolved_host,
+        "--port",
+        str(resolved_port),
     ]
 
-    if reload:
+    if resolved_reload:
         cmd.append("--reload")
-
-    server_info(
-        app_name="MyApp",
-        instance="app",
-        host=host,
-        port=port,
-        reload=reload,
-        environment="development",
-        docs_enabled=True,
-    )
 
     os.execvp(cmd[0], cmd)

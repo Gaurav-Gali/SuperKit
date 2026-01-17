@@ -1,5 +1,3 @@
-from superkit import create_app
-
 from typing import Callable, Optional, Any, Dict
 from pydantic_settings import BaseSettings
 from pydantic import Field
@@ -10,12 +8,10 @@ class Settings(BaseSettings):
     Project settings for SuperKit.
     """
 
-    environment: str = "development"
-
     # ─────────────────────────────────────────────
     # FastAPI metadata (first-class)
     # ─────────────────────────────────────────────
-    title: str = "SuperKit App XYZ (Testing)"
+    title: str = "SuperKit App (Testing)"
     description: Optional[str] = None
     version: str = "0.1.0"
 
@@ -47,6 +43,3 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
-
-
-dev = create_app(environment="new_environment", settings=settings)
