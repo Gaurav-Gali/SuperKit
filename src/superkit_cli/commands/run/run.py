@@ -1,8 +1,7 @@
 import typer
 import os
-import sys
-import importlib
-from pathlib import Path
+
+from superkit_cli.bootstrap_loader import bootstrap_loader
 
 from superkit.runtime.registry import runtime
 from superkit_cli.ui.runtime.server_info import server_info
@@ -32,47 +31,9 @@ def run(
         help="Override reload from settings",
     ),
 ):
-    # ─────────────────────────────────────────────
-    # Locate project root & main.py
-    # ─────────────────────────────────────────────
-    cwd = Path.cwd()
-    main_file = cwd / "main.py"
+    # Bootstrap Loader
+    bootstrap_loader()
 
-    if not main_file.exists():
-        typer.secho(
-            "Error: main.py not found in the current directory.",
-            fg=typer.colors.RED,
-        )
-        raise typer.Exit(1)
-
-    # ─────────────────────────────────────────────
-    # Ensure project root is importable
-    # ─────────────────────────────────────────────
-    if str(cwd) not in sys.path:
-        sys.path.insert(0, str(cwd))
-
-    # ─────────────────────────────────────────────
-    # Import main.py to initialize runtime
-    # ─────────────────────────────────────────────
-    try:
-        importlib.import_module("main")
-    except Exception as e:
-        typer.secho(
-            f"Error importing main.py: {e}",
-            fg=typer.colors.RED,
-        )
-        raise typer.Exit(1)
-
-    # ─────────────────────────────────────────────
-    # Validate runtime
-    # ─────────────────────────────────────────────
-    if not runtime.is_initialized():
-        typer.secho(
-            "Error: SuperKit runtime was not initialized.\n"
-            "Make sure create_app() is called in main.py.",
-            fg=typer.colors.RED,
-        )
-        raise typer.Exit(1)
 
     # ─────────────────────────────────────────────
     # Resolve server configuration
@@ -104,10 +65,9 @@ def run(
     cmd = [
         "uvicorn",
         f"main:{instance}",
-        "--host",
-        resolved_host,
-        "--port",
-        str(resolved_port),
+        "--app-dir", "src",
+        "--host", resolved_host,
+        "--port", str(resolved_port),
     ]
 
     if resolved_reload:

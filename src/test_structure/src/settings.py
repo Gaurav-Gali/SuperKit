@@ -11,8 +11,8 @@ class Settings(BaseSettings):
     # ─────────────────────────────────────────────
     # FastAPI metadata (first-class)
     # ─────────────────────────────────────────────
-    title: str = "SuperKit App (Testing)"
-    description: Optional[str] = None
+    title: str = "SuperKit Test Project"
+    description: Optional[str] = "A test project for SuperKit."
     version: str = "0.1.0"
 
     docs_url: Optional[str] = "/docs"
@@ -43,3 +43,5 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
+
+
