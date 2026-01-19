@@ -1,25 +1,27 @@
 from datetime import datetime
 from rich.panel import Panel
 from rich.text import Text
-from rich.syntax import Syntax
+from pathlib import Path
 
 
 class ErrorPanelRenderer:
-    def render(self, exc_type, exc_value, exc_tb):
-        """Render a runtime error with code context"""
+    # Framework paths to exclude from stack trace
+    FRAMEWORK_PATHS = [
+        'uvicorn',
+        'starlette',
+        'fastapi',
+        'anyio',
+        'site-packages',
+        '.venv',
+        'venv',
+    ]
 
-        # Get the last frame (where the actual error occurred)
-        if exc_tb:
-            while exc_tb.tb_next:
-                exc_tb = exc_tb.tb_next
-            frame = exc_tb.tb_frame
-            filename = frame.f_code.co_filename
-            lineno = exc_tb.tb_lineno
-            function_name = frame.f_code.co_name
-        else:
-            filename = "Unknown"
-            lineno = 0
-            function_name = "Unknown"
+    def _is_user_code(self, filename: str) -> bool:
+        """Check if the file is user code (not framework code)"""
+        return not any(fw in filename for fw in self.FRAMEWORK_PATHS)
+
+    def render(self, exc_type, exc_value, exc_tb):
+        """Render a runtime error with filtered stack trace"""
 
         # Get current time
         time = datetime.now().strftime("%H:%M:%S")
@@ -27,43 +29,101 @@ class ErrorPanelRenderer:
         # Build the error content
         content = Text()
 
-        # Error message
-        error_msg = f"{exc_type.__name__}: {exc_value}"
-        content.append(error_msg, style="red bold")
+        # Error type and message
+        content.append(f"{exc_type.__name__}: {str(exc_value)}", style="red bold")
         content.append("\n\n")
 
-        # Location info
-        location = f"{filename}:{lineno} in {function_name}"
-        content.append(location, style="dim")
+        # Build the filtered stack trace
+        if exc_tb:
+            # Collect all frames
+            all_frames = []
+            tb = exc_tb
+            while tb is not None:
+                all_frames.append(tb)
+                tb = tb.tb_next
 
-        # Try to show code context
-        if exc_tb and filename != "Unknown":
+            # Filter to only user code frames
+            user_frames = [
+                tb for tb in all_frames
+                if self._is_user_code(tb.tb_frame.f_code.co_filename)
+            ]
+
+            # If we filtered everything out, show at least the last frame
+            if not user_frames and all_frames:
+                user_frames = [all_frames[-1]]
+
+            if user_frames:
+                content.append("Traceback:\n", style="bold")
+                content.append("─" * 60, style="dim")
+                content.append("\n\n")
+
+                # Show each user frame in the stack
+                for idx, tb in enumerate(user_frames):
+                    frame = tb.tb_frame
+                    filename = frame.f_code.co_filename
+                    lineno = tb.tb_lineno
+                    function_name = frame.f_code.co_name
+
+                    try:
+                        short_filename = Path(filename).name
+                    except:
+                        short_filename = filename
+
+                    # Frame header
+                    is_last = (idx == len(user_frames) - 1)
+                    arrow = "❱ " if is_last else "  "
+
+                    content.append(arrow, style="red bold" if is_last else "dim")
+                    content.append(f"File \"{short_filename}\", line {lineno}, in {function_name}\n",
+                                   style="cyan bold" if is_last else "cyan")
+
+                    # Try to show the code for this frame
+                    try:
+                        with open(filename, 'r') as f:
+                            lines = f.readlines()
+
+                        if 0 < lineno <= len(lines):
+                            code_line = lines[lineno - 1].strip()
+                            content.append("    ", style="")
+                            content.append(code_line, style="red bold" if is_last else "")
+                            content.append("\n")
+                    except:
+                        pass
+
+                    content.append("\n")
+
+                content.append("─" * 60, style="dim")
+                content.append("\n\n")
+
+            # Show detailed code context for the last frame (where error occurred)
+            last_tb = user_frames[-1] if user_frames else all_frames[-1]
+            frame = last_tb.tb_frame
+            filename = frame.f_code.co_filename
+            lineno = last_tb.tb_lineno
+
             try:
                 with open(filename, 'r') as f:
                     lines = f.readlines()
 
-                # Show 2 lines before and after the error
-                start = max(0, lineno - 3)
-                end = min(len(lines), lineno + 2)
+                # Show 3 lines before and 2 after the error
+                start = max(0, lineno - 4)
+                end = min(len(lines), lineno + 3)
                 code_lines = lines[start:end]
 
-                # Add code snippet
-                content.append("\n\n")
+                content.append("Code context:\n", style="bold")
                 for i, line in enumerate(code_lines, start=start + 1):
-                    line_num = f"{i:4d} "
+                    line_num = f"{i:4d} │ "
                     if i == lineno:
-                        # Highlight the error line
                         content.append(line_num, style="red bold")
                         content.append("❱ ", style="red bold")
-                        content.append(line.rstrip(), style="red")
+                        content.append(line.rstrip(), style="red bold")
                     else:
                         content.append(line_num, style="dim")
-                        content.append("  ", style="dim")
-                        content.append(line.rstrip(), style="dim")
+                        content.append("  ", style="")
+                        content.append(line.rstrip(), style="")
                     content.append("\n")
 
             except Exception:
-                # If we can't read the file, just skip the code context
                 pass
 
         return Panel(
@@ -72,4 +132,6 @@ class ErrorPanelRenderer:
             border_style="red",
             title_align="left",
             padding=(1, 2),
+            width=100,
         )
+

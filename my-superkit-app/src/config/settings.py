@@ -15,13 +15,13 @@ class Settings(ProjectSettings):
     # ─────────────────────────────────────────────
     # Advanced Configuration
     # ─────────────────────────────────────────────
-    debug: bool = False
+    debug: bool = True
     lifespan: object | None = None
 
     # ─────────────────────────────────────────────
     # Environment (semantic only)
     # ─────────────────────────────────────────────
-    environment: str = "application"
+    environment: str = "development"
 
     # ─────────────────────────────────────────────
     # Server config (used by superkit CLI)
