@@ -1,0 +1,100 @@
+/* Custom styles for SuperKit documentation */
+
+:root {
+  --md-primary-fg-color: #4f46e5;
+  --md-accent-fg-color: #6366f1;
+}
+
+/* Hero section styling */
+.hero {
+  text-align: center;
+  padding: 2rem 0;
+  margin-bottom: 2rem;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero p {
+  font-size: 1.25rem;
+  color: var(--md-default-fg-color--light);
+  margin-bottom: 2rem;
+}
+
+/* Card grid styling */
+.grid.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.grid.cards > * {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.grid.cards > *:hover {
+  border-color: var(--md-primary-fg-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Code block enhancements */
+.highlight {
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+/* Table styling */
+table {
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+/* Admonition styling */
+.admonition {
+  border-radius: 0.5rem;
+}
+
+/* Button styling */
+.md-button {
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.md-button--primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+}
+
+.md-button--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+/* Navigation tabs */
+.md-tabs {
+  background: linear-gradient(to right, #667eea 0%, #764ba2 100%);
+}
+
+/* Search box */
+.md-search__input {
+  border-radius: 0.5rem;
+}
+
+/* Footer */
+.md-footer {
+  background: linear-gradient(to right, #667eea 0%, #764ba2 100%);
+}

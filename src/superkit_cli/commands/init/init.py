@@ -11,6 +11,9 @@ init_app = typer.Typer(help="Initialize a new SuperKit project")
 def init():
     data = setup_wizard()
 
+    if data is None:
+        raise typer.Exit(1)
+
     project_name = data["project_name"]
     target_dir = (
         Path.cwd()

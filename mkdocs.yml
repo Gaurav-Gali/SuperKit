@@ -1,0 +1,115 @@
+site_name: SuperKit
+site_description: A batteries-included framework on top of FastAPI that adds structure, conventions, and tooling without magic.
+site_author: SuperKit Team
+site_url: https://superkit.dev
+
+theme:
+  name: material
+  palette:
+    # Light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.expand
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - search.highlight
+    - search.suggest
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+
+  icon:
+    repo: fontawesome/brands/github
+    admonition:
+      note: octicons/tag-16
+      abstract: octicons/checklist-16
+      info: octicons/info-16
+      tip: octicons/squirrel-16
+      success: octicons/check-16
+      question: octicons/question-16
+      warning: octicons/alert-16
+      failure: octicons/x-circle-16
+      danger: octicons/zap-16
+      bug: octicons/bug-16
+      example: octicons/beaker-16
+      quote: octicons/quote-16
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+
+plugins:
+  - search:
+      separator: '[\s\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - Installation: getting-started/installation.md
+      - Quick Start: getting-started/quickstart.md
+      - Project Structure: getting-started/project-structure.md
+
+  - Package Usage:
+      - Overview: package/overview.md
+      - Application:
+          - SuperKitApp: package/application/superkitapp.md
+          - Settings: package/application/settings.md
+      - Logging:
+          - Overview: package/logging/overview.md
+          - User Logs: package/logging/user-logs.md
+          - Attachments: package/logging/attachments.md
+          - Advanced: package/logging/advanced.md
+
+  - CLI Reference:
+      - Overview: cli/overview.md
+      - Commands:
+          - init: cli/commands/init.md
+          - run: cli/commands/run.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/yourusername/superkit
+
+extra_css:
+  - stylesheets/extra.css
