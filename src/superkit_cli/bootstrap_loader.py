@@ -5,7 +5,6 @@ import typer
 
 from superkit.runtime.registry import runtime
 
-
 def bootstrap_loader() -> None:
     """
     Prepare the SuperKit runtime by:

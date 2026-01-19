@@ -29,7 +29,6 @@ def setup_wizard() -> dict | None:
     }
 
     # Confirmation
-    console.print()
     console.print("[green]Proceed?[/green] [dim](Y/n)[/dim]")
     confirmed = console.input("› ").lower() in ['y', 'yes']
     console.print()

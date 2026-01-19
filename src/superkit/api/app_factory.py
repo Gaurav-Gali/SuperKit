@@ -1,5 +1,6 @@
 from superkit.api.application import SuperKitApp
 from superkit.runtime.registry import runtime
+from superkit.logging import setup_logging
 
 def create_app(
     *,
@@ -7,6 +8,10 @@ def create_app(
     environment: str = "development",
     **kwargs,
 ) -> SuperKitApp:
+    # Initializing Logging
+    setup_logging()
+
+
     fastapi_kwargs = {}
     server_config = {}
 
