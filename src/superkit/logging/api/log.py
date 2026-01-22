@@ -29,29 +29,29 @@ class LogEntry:
 
 
 class _LogAPI:
-    def info(self, *, title: str = "Info", message: str = "") -> LogEntry:
+    def info(self, message: str = "") -> LogEntry:
         record = SuperKitLogRecord(
             kind="user",
             level="INFO",
-            title=title,
+            title="INFO",
             message=message,
         )
         return LogEntry(record, _logger)
 
-    def warning(self, *, title: str = "Warning", message: str = "") -> LogEntry:
+    def warning(self, message: str = "") -> LogEntry:
         record = SuperKitLogRecord(
             kind="user",
             level="WARNING",
-            title=title,
+            title="WARNING",
             message=message,
         )
         return LogEntry(record, _logger)
 
-    def critical(self, *, title: str = "Critical", message: str = "") -> LogEntry:
+    def critical(self, message: str = "") -> LogEntry:
         record = SuperKitLogRecord(
             kind="user",
             level="CRITICAL",
-            title=title,
+            title="CRITICAL",
             message=message,
         )
         return LogEntry(record, _logger)

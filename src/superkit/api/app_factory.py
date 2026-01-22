@@ -2,12 +2,17 @@ from superkit.api.application import SuperKitApp
 from superkit.runtime.registry import runtime
 from superkit.logging import setup_logging
 
+from superkit.runtime.bootstrap import ensure_src_on_path
+
 def create_app(
     *,
     settings=None,
     environment: str = "development",
     **kwargs,
 ) -> SuperKitApp:
+    # Source on path
+    ensure_src_on_path()
+
     # Initializing Logging
     setup_logging()
 

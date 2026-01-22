@@ -1,4 +1,3 @@
-
 from superkit import create_app
 from config.settings import settings
 from superkit.logging import log
@@ -65,7 +64,12 @@ def log_mixed_json():
         "ip_address": "192.168.1.100",
         "attempt_count": 3,
         "timestamp": "2025-01-20T10:51:24Z"
-    })
+    }).add_table([
+        ["Query", "Duration (ms)", "Table"],
+        ["SELECT * FROM users", 1250, "users"],
+        ["SELECT * FROM orders", 3400, "orders"],
+        ["JOIN users and orders", 5600, "multiple"],
+    ])
     return {"status": "logged"}
 
 

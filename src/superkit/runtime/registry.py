@@ -1,7 +1,6 @@
 from typing import Optional, Dict, Any
 from threading import Lock
 
-
 class RuntimeRegistry:
     """
     Framework-owned runtime registry.

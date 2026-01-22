@@ -6,6 +6,7 @@ from superkit.logging.renderers.user import UserPanelRenderer
 from superkit.logging.renderers.http import HttpPanelRenderer
 from superkit.logging.renderers.json import JsonPanelRenderer
 from superkit.logging.renderers.error import ErrorPanelRenderer
+
 from superkit.logging.filters.noise import NOISE_PHRASES
 
 console = Console()

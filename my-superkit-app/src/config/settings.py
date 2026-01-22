@@ -12,6 +12,7 @@ class Settings(ProjectSettings):
     description: str | None = None
     version: str = "0.1.0"
 
+
     # ─────────────────────────────────────────────
     # Advanced Configuration
     # ─────────────────────────────────────────────
@@ -40,6 +41,7 @@ class Settings(ProjectSettings):
     # ─────────────────────────────────────────────
     # Environment Variables
     # ─────────────────────────────────────────────
+    DB_URL:str | None = None
 
 
 settings = Settings()
