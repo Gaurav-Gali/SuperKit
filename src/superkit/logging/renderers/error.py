@@ -20,6 +20,21 @@ class ErrorPanelRenderer:
         """Check if the file is user code (not framework code)"""
         return not any(fw in filename for fw in self.FRAMEWORK_PATHS)
 
+    def _get_project_relative_path(self, filename: str) -> str:
+        """Get the project-relative path for a file"""
+        try:
+            file_path = Path(filename).resolve()
+            cwd = Path.cwd()
+            try:
+                # Try to get relative path from current working directory
+                relative_path = file_path.relative_to(cwd)
+                return str(relative_path)
+            except ValueError:
+                # If file is outside project, return just the filename
+                return file_path.name
+        except:
+            return filename
+
     def render(self, exc_type, exc_value, exc_tb):
         """Render a runtime error with filtered stack trace"""
 
@@ -64,17 +79,15 @@ class ErrorPanelRenderer:
                     lineno = tb.tb_lineno
                     function_name = frame.f_code.co_name
 
-                    try:
-                        short_filename = Path(filename).name
-                    except:
-                        short_filename = filename
+                    # Get project-relative path
+                    relative_path = self._get_project_relative_path(filename)
 
                     # Frame header
                     is_last = (idx == len(user_frames) - 1)
                     arrow = "❱ " if is_last else "  "
 
                     content.append(arrow, style="red bold" if is_last else "dim")
-                    content.append(f"File \"{short_filename}\", line {lineno}, in {function_name}\n",
+                    content.append(f"File \"{relative_path}\", line {lineno}, in {function_name}\n",
                                    style="cyan bold" if is_last else "cyan")
 
                     # Try to show the code for this frame
@@ -134,4 +147,3 @@ class ErrorPanelRenderer:
             padding=(1, 2),
             width=100,
         )
-
