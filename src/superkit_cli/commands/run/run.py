@@ -10,7 +10,7 @@ from superkit_cli.bootstrap_loader import bootstrap_loader
 from superkit.runtime.registry import runtime
 from superkit_cli.ui.runtime.server_info import server_info
 
-run_app = typer.Typer(help="Run a SuperKit / FastAPI application")
+run_app = typer.Typer()
 console = Console()
 
 
@@ -30,7 +30,7 @@ def show_error(message: str):
 
 def validate_app_instance(instance: str) -> bool:
     """
-    Validate that the app instance exists and is a FastAPI app.
+    Validate that the apps instance exists and is a FastAPI apps.
     Returns True if valid, False otherwise.
     """
     main_path = Path("src/main.py")
@@ -62,7 +62,7 @@ def validate_app_instance(instance: str) -> bool:
     # Check if it's a FastAPI instance
     from fastapi import FastAPI
     if not isinstance(app, FastAPI):
-        show_error(f"'{instance}' exists but is not a FastAPI app")
+        show_error(f"'{instance}' exists but is not a FastAPI apps")
         return False
 
     return True
@@ -72,7 +72,7 @@ def validate_app_instance(instance: str) -> bool:
 def run(
         instance: str = typer.Argument(
             ...,
-            help="App instance name defined in main.py (e.g. app, dev, prod)",
+            help="App instance name defined in main.py (e.g. apps, dev, prod)",
         ),
         host: str | None = typer.Option(
             None,
@@ -94,7 +94,7 @@ def run(
     bootstrap_loader()
 
     # ─────────────────────────────────────────────
-    # Validate app instance before starting server
+    # Validate apps instance before starting server
     # ─────────────────────────────────────────────
     if not validate_app_instance(instance):
         raise typer.Exit(1)

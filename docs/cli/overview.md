@@ -18,7 +18,7 @@ SuperKit provides a powerful command-line interface for managing your projects a
 ### Initialize a Project
 
 ```bash
-superkit init my-app
+superkit init my-apps
 ```
 
 Creates a new SuperKit project with the recommended structure.
@@ -28,7 +28,7 @@ Creates a new SuperKit project with the recommended structure.
 ### Run Your Application
 
 ```bash
-superkit run app
+superkit run apps
 ```
 
 Starts your application with hot reload and beautiful console output.
@@ -65,32 +65,32 @@ superkit --version
 
 ```bash
 # Create project
-superkit init my-app
+superkit init my-apps
 
 # Navigate to project
-cd my-app
+cd my-apps
 
-# Run the app
-superkit run app
+# Run the apps
+superkit run apps
 ```
 
 ### Development Workflow
 
 ```bash
 # Run with auto-reload (default)
-superkit run app
+superkit run apps
 
 # Run on custom port
-superkit run app --port 3000
+superkit run apps --port 3000
 
 # Run on all interfaces
-superkit run app --host 0.0.0.0
+superkit run apps --host 0.0.0.0
 ```
 
 ### Multiple Environments
 
 ```bash
-# Define multiple app instances in main.py
+# Define multiple apps instances in main.py
 # dev = SuperKitApp(environment="development")
 # prod = SuperKitApp(environment="production")
 
@@ -119,7 +119,7 @@ SuperKit CLI provides rich, colorful console output:
 Development server automatically reloads when you change code:
 
 ```bash
-superkit run app  # Auto-reload enabled by default
+superkit run apps  # Auto-reload enabled by default
 ```
 
 ### 🔧 Configuration
@@ -127,7 +127,7 @@ superkit run app  # Auto-reload enabled by default
 Override settings from the command line:
 
 ```bash
-superkit run app --host 0.0.0.0 --port 3000 --no-reload
+superkit run apps --host 0.0.0.0 --port 3000 --no-reload
 ```
 
 ### ✅ Validation

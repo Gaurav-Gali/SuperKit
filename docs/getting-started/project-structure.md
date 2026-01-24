@@ -65,7 +65,7 @@ class Settings(ProjectSettings):
     version: str = "1.0.0"
 
     # Add your custom settings
-    database_url: str = "sqlite:///./app.db"
+    database_url: str = "sqlite:///./apps.db"
     secret_key: str = "change-me-in-production"
 ```
 

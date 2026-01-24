@@ -1,7 +1,7 @@
 import logging
 from superkit.logging.record import SuperKitLogRecord
 
-_logger = logging.getLogger("superkit.app")
+_logger = logging.getLogger("superkit.apps")
 
 
 class LogEntry:

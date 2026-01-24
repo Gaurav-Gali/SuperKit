@@ -19,7 +19,7 @@ superkit run [INSTANCE] [OPTIONS]
 The app instance name defined in `src/main.py`:
 
 ```bash
-superkit run app
+superkit run apps
 ```
 
 If you have multiple instances:
@@ -44,7 +44,7 @@ superkit run prod  # Run production instance
 Override the host from settings:
 
 ```bash
-superkit run app --host 0.0.0.0
+superkit run apps --host 0.0.0.0
 ```
 
 **Default:** `127.0.0.1` (from settings)
@@ -54,7 +54,7 @@ superkit run app --host 0.0.0.0
 Override the port from settings:
 
 ```bash
-superkit run app --port 3000
+superkit run apps --port 3000
 ```
 
 **Default:** `8000` (from settings)
@@ -64,8 +64,8 @@ superkit run app --port 3000
 Enable or disable auto-reload:
 
 ```bash
-superkit run app --reload      # Enable auto-reload
-superkit run app --no-reload   # Disable auto-reload
+superkit run apps --reload      # Enable auto-reload
+superkit run apps --no-reload   # Disable auto-reload
 ```
 
 **Default:** `true` (from settings)
@@ -77,7 +77,7 @@ superkit run app --no-reload   # Disable auto-reload
 ### Basic Usage
 
 ```bash
-superkit run app
+superkit run apps
 ```
 
 Runs with default settings from `settings.py` and `.env`.
@@ -85,7 +85,7 @@ Runs with default settings from `settings.py` and `.env`.
 ### Custom Host and Port
 
 ```bash
-superkit run app --host 0.0.0.0 --port 3000
+superkit run apps --host 0.0.0.0 --port 3000
 ```
 
 Runs on all interfaces at port 3000.
@@ -191,10 +191,10 @@ When auto-reload is enabled (default in development):
 
 ```bash
 # Auto-reload enabled (default)
-superkit run app
+superkit run apps
 
 # Disable for production
-superkit run app --no-reload
+superkit run apps --no-reload
 ```
 
 !!! tip "Auto-Reload in Development"
@@ -278,7 +278,7 @@ Error: [Errno 48] Address already in use
 
 ```bash
 # Use different port
-superkit run app --port 8001
+superkit run apps --port 8001
 
 # Or find and kill the process
 lsof -ti:8000 | xargs kill
@@ -349,7 +349,7 @@ pm2 start "superkit run prod --no-reload" --name api
 # Supervisor
 [program:api]
 command=superkit run prod --no-reload
-directory=/app
+directory=/apps
 autostart=true
 autorestart=true
 ```
@@ -436,13 +436,13 @@ HOST=127.0.0.1
 PORT=8000
 RELOAD=true
 ENVIRONMENT=development
-DATABASE_URL=sqlite:///./app.db
+DATABASE_URL=sqlite:///./apps.db
 ```
 
 Run:
 
 ```bash
-superkit run app
+superkit run apps
 ```
 
 ---

@@ -57,7 +57,7 @@ def hello():
 Run your app:
 
 ```bash
-superkit run app
+superkit run apps
 ```
 
 ---

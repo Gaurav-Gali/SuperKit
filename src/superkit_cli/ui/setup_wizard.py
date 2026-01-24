@@ -7,8 +7,8 @@ def setup_wizard() -> dict | None:
     console.print()
 
     # Project Name
-    console.print("[cyan]Project name[/cyan] ([magenta]my-superkit-app[/magenta])")
-    project_name = console.input("› ") or "my-superkit-app"
+    console.print("[cyan]Project name[/cyan] ([magenta]my-superkit-apps[/magenta])")
+    project_name = console.input("› ") or "my-superkit-apps"
     console.print()
 
     # App Instance

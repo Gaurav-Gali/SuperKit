@@ -3,6 +3,7 @@ from jinja2 import Template
 
 
 def render_template_dir(template_dir: Path, target_dir: Path, context: dict):
+    target_dir.mkdir(parents=True, exist_ok=True)
     for path in template_dir.rglob("*"):
         relative = path.relative_to(template_dir)
         dest = target_dir / relative

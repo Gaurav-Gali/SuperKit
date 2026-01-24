@@ -165,7 +165,7 @@ from superkit.settings import ProjectSettings
 # Define settings
 settings = ProjectSettings()
 
-# Create app with settings
+# Create apps with settings
 app = SuperKitApp(
     title=settings.title,
     description=settings.description,
@@ -242,7 +242,7 @@ class DatabaseConfig(BaseModel):
 class Settings(ProjectSettings):
     database: DatabaseConfig = Field(
         default=DatabaseConfig(
-            url="sqlite:///./app.db",
+            url="sqlite:///./apps.db",
             pool_size=5,
         )
     )

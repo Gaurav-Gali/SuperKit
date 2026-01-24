@@ -8,7 +8,7 @@ class Settings(ProjectSettings):
     # ─────────────────────────────────────────────
     # App metadata
     # ─────────────────────────────────────────────
-    title: str = "my-superkit-app"
+    title: str = "my-superkit-apps"
     description: str | None = None
     version: str = "0.1.0"
 

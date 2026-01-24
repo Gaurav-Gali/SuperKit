@@ -9,7 +9,7 @@ Get your first SuperKit application running in under 5 minutes!
 Use the SuperKit CLI to scaffold a new project:
 
 ```bash
-superkit init my-app
+superkit init my-apps
 ```
 
 You'll be prompted with a few questions:
@@ -23,7 +23,7 @@ You'll be prompted with a few questions:
 ## 2. Navigate to Your Project
 
 ```bash
-cd my-app
+cd my-apps
 ```
 
 Your project structure will look like this:
@@ -68,7 +68,7 @@ def read_root():
 Start the development server:
 
 ```bash
-superkit run app
+superkit run apps
 ```
 
 You'll see beautiful output showing:

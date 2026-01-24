@@ -65,7 +65,7 @@ Environment (development/production):
 ### Create New Project
 
 ```bash
-superkit init my-app
+superkit init my-apps
 ```
 
 Creates:
@@ -172,7 +172,7 @@ Once your project is created:
 ### 1. Navigate to Project
 
 ```bash
-cd my-app
+cd my-apps
 ```
 
 ### 2. Install Dependencies (if needed)
@@ -186,7 +186,7 @@ uv pip install -e .
 ### 3. Run Your Application
 
 ```bash
-superkit run app
+superkit run apps
 ```
 
 ### 4. Visit Your API
@@ -309,8 +309,8 @@ cp .env .env.example
 # 5. Customize settings
 # Edit src/settings.py and src/main.py
 
-# 6. Run the app
-superkit run app
+# 6. Run the apps
+superkit run apps
 
 # 7. Start coding!
 ```

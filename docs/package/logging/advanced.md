@@ -79,7 +79,7 @@ from superkit.logging.handler import SuperKitPanelHandler
 import logging
 
 handler = SuperKitPanelHandler()
-logger = logging.getLogger("superkit.app")
+logger = logging.getLogger("superkit.apps")
 logger.addHandler(handler)
 ```
 

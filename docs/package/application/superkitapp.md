@@ -114,7 +114,7 @@ superkit run prod  # Production
 `SuperKitApp` maintains internal state for future features:
 
 ```python
-app.state.installed_apps = None  # Reserved for app mounting
+app.state.installed_apps = None  # Reserved for apps mounting
 app.state.settings = None        # Reserved for settings
 app.state.security = None        # Reserved for security
 ```

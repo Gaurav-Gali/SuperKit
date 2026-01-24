@@ -1,0 +1,7 @@
+from apps.{{ app_name }}.controllers import router
+
+@router.get("/")
+def list_{{ app_name }}():
+    return {
+        "app" : "{{ app_name }}"
+    }

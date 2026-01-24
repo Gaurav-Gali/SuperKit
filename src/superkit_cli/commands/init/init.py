@@ -5,7 +5,7 @@ from importlib.resources import files
 from superkit_cli.ui.setup_wizard import setup_wizard
 from superkit_cli.scaffold.renderer import render_template_dir
 
-init_app = typer.Typer(help="Initialize a new SuperKit project")
+init_app = typer.Typer()
 
 @init_app.command('init')
 def init():

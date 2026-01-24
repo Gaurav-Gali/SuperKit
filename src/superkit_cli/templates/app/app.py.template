@@ -1,0 +1,10 @@
+from superkit.apps import AppConfig
+from apps.{{ app_name }}.controllers import router as {{app_name}}_router
+
+
+class {{ class_name }}App(AppConfig):
+    name = "{{ app_name }}"
+    url_prefix = "/{{ app_name }}"
+    tags = ["{{ class_name }}"]
+
+    routers = [{{app_name}}_router]
