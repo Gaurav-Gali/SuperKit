@@ -1,3 +1,8 @@
+### ==App Creation==
+```bash
+superkit apps init <app-name>
+```
+
 ### ==App Definition==
 
 Each app **must** define exactly one `AppConfig` subclass.

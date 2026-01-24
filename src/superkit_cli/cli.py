@@ -23,5 +23,9 @@ app.add_typer(
     help="Manages SuperKit Apps",
 )
 
+from superkit.logging import setup_logging
+
 def main():
+    setup_logging()
     app()
+
