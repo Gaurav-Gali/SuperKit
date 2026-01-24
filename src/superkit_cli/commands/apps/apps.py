@@ -12,6 +12,6 @@ apps_app = typer.Typer()
 apps_app.command('init', help="Initializes superkit apps, app Structure")(init_app)
 apps_app.command('list', help="Lists superkit apps in the app Structure")(list_apps)
 apps_app.command('info', help="Provides detailed info about the chosen app")(info_app)
-apps_app.command('remove', help="Provides detailed info about the chosen app")(remove_app)
-apps_app.command('doctor', help="Provides detailed info about the chosen app")(doctor_apps)
+apps_app.command('remove', help="Removes the chosen app")(remove_app)
+apps_app.command('doctor', help="Checks and validates apps and app structure")(doctor_apps)
 
