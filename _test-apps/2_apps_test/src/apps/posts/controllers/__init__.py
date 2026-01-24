@@ -1,0 +1,9 @@
+from superkit.routing import ControllerGroup
+
+router = ControllerGroup()
+
+router.mount_controllers(
+    __name__,
+    __path__,
+    recursive=False
+)
